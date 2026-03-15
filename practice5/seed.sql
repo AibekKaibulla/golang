@@ -16,9 +16,6 @@ CREATE TABLE user_friends (
     CONSTRAINT no_self_friend CHECK (user_id <> friend_id)
 );
 
--- ============================================================
---  INSERT users
--- ============================================================
 INSERT INTO users (name, email, gender, birth_date) VALUES
   ('Yara Anderson', 'yara.anderson@example.com', 'male', '1988-07-06'),
   ('Xander Garcia', 'xander.garcia@outlook.com', 'non-binary', '1986-09-02'),
@@ -46,9 +43,6 @@ INSERT INTO users (name, email, gender, birth_date) VALUES
   ('Uma Thompson', 'uma.thompson@gmail.com', 'male', '1992-07-05'),
   ('Xander Jackson', 'xander.jackson@example.com', 'male', '1995-02-27');
 
--- ============================================================
---  INSERT user_friends  (symmetric: both directions)
--- ============================================================
 INSERT INTO user_friends (user_id, friend_id) VALUES
   (1, 2),
   (2, 1),
@@ -229,20 +223,15 @@ INSERT INTO user_friends (user_id, friend_id) VALUES
   (24, 25),
   (25, 24);
 
--- ============================================================
---  Quick verification queries
--- ============================================================
 
--- Total user count (should be 25)
+
 SELECT COUNT(*) AS total_users FROM users;
 
--- Common friends of user 1 & user 2 (should include ids 3,4,5)
 SELECT u.*
 FROM users u
 JOIN user_friends uf1 ON uf1.friend_id = u.id AND uf1.user_id = 1
 JOIN user_friends uf2 ON uf2.friend_id = u.id AND uf2.user_id = 2;
 
--- Common friends of user 6 & user 7 (should include ids 8,9,10)
 SELECT u.*
 FROM users u
 JOIN user_friends uf1 ON uf1.friend_id = u.id AND uf1.user_id = 6
